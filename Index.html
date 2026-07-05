@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SM Cozy Link - Advanced</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #09061a 0%, #150a2b 50%, #03010a 100%);
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background 1s ease;
+        }
+
+        body.warm-light {
+            background: linear-gradient(135deg, #2d1810 0%, #4a2113 50%, #170702 100%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #a78bfa;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+        }
+        body.warm-light .header {
+            color: #f59e0b;
+        }
+
+        /* 🖼️ कोज़ी लो-फाई कमरा */
+        .room-box {
+            width: 100%;
+            height: 280px;
+            background: rgba(15, 10, 35, 0.4);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        body.warm-light .room-box {
+            border-color: rgba(245, 158, 11, 0.25);
+            background: rgba(45, 24, 16, 0.4);
+        }
+
+        /* खिड़की और बारिश */
+        .window {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 90px;
+            height: 110px;
+            background: linear-gradient(to bottom, #111827, #1f2937);
+            border: 2px solid #374151;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .rain {
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(transparent, transparent 10px, rgba(167, 139, 250, 0.15) 10px, rgba(167, 139, 250, 0.15) 20px);
+            animation: rainfall 0.6s infinite linear;
+        }
+
+        /* मेज़ */
+        .desk {
+            position: absolute;
+            bottom: 25px;
+            width: 85%;
+            height: 12px;
+            background: #4b5563;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+        }
+        body.warm-light .desk {
+            background: #78350f;
+        }
+
+        /* इंटरैक्टिव चीजें */
+        .interactive-obj {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.3s;
+        }
+        .interactive-obj:active {
+            transform: scale(0.9);
+        }
+
+        .lamp { bottom: 37px; right: 25px; font-size: 2rem; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2)); }
+        body.warm-light .lamp { filter: drop-shadow(0 0 20px #f59e0b); }
+
+        .laptop { bottom: 37px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; }
+        .laptop:active { transform: translateX(-50%) scale(0.9); }
+
+        .headphones { bottom: 37px; left: 25px; font-size: 1.8rem; }
+        .music-playing-dot {
+            position: absolute; top: -5px; right: -2px; width: 8px; height: 8px;
+            background-color: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 10px #ef4444;
+        }
+
+        /* ☕️ कॉफी कप (टिप जार) */
+        .coffee-mug { bottom: 37px; left: 80px; font-size: 1.6rem; }
+        
+        /* 📖 डायरी (फैन मैसेज बुक) */
+        .diary { bottom: 37px; right: 80px; font-size: 1.7rem; }
+
+        /* 👤 प्रोफाइल एरिया */
+        .profile-box {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .avatar-ring {
+            width: 60px; height: 60px; border-radius: 50%; border: 2px solid #a78bfa;
+            padding: 3px; margin: 0 auto; display: flex; justify-content: center; align-items: center;
+        }
+        body.warm-light .avatar-ring { border-color: #f59e0b; }
+
+        .username { font-size: 1.1rem; font-weight: 600; margin-top: 10px; }
+        .bio { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; max-width: 250px; }
+
+        /* 📦 पॉप-अप विंडोज (Modals) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #110e2e;
+            border: 1px solid #a78bfa;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 350px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+            position: relative;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        .modal h3 {
+            margin-bottom: 15px;
+            color: #a78bfa;
+        }
+
+        /* डायरी फॉर्म और लिस्ट */
+        .diary-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #3b3561;
+            background: #09061a;
+            color: white;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .messages-list {
+            max-height: 120px;
+            overflow-y: auto;
+            margin-top: 15px;
+            text-align: left;
+            border-top: 1px solid #3b3561;
+            padding-top: 10px;
+        }
+
+        .msg-item {
+            font-size: 0.8rem;
+            background: #18143d;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+
+        .msg-item strong { color: #f472b6; }
+
+        /* क्यूआर कोड स्टाइल्स */
+        .qr-placeholder {
+            width: 160px;
+            height: 160px;
+            background: white;
+            margin: 15px auto;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 4px solid #a78bfa;
+        }
+
+        .qr-placeholder img {
+            width: 140px;
+            height: 140px;
+        }
+
+        /* फुटर गाइड */
+        .guide-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 15px;
+            animation: pulseText 1.5s infinite ease-in-out;
+        }
+
+        @keyframes rainfall {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- छुपा हुआ ऑडियो टैग -->
+    <audio id="lofi-audio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!-- हेडर -->
+        <div class="header" id="app-title">SM Cozy Link 🌌</div>
+
+        <!-- कोज़ी रूम -->
+        <div class="room-box">
+            <!-- खिड़की -->
+            <div class="window">
+                <div class="rain"></div>
+            </div>
+
+            <!-- मेज़ की चीजें -->
+            <div class="desk">
+                <!-- 🎧 हेडफोन्स -->
+                <div class="interactive-obj headphones" onclick="toggleMusic()">
+                    🎧
+                    <div class="music-playing-dot" id="music-dot"></div>
+                </div>
+
+                <!-- ☕️ कॉफी कप (टिप जार) -->
+                <div class="interactive-obj coffee-mug" onclick="openTipJar()">
+                    ☕️
+                </div>
+
+                <!-- 💻 लैपटॉप -->
+                <div class="interactive-obj laptop" onclick="openLink()">
+                    💻
+                </div>
+
+                <!-- 📖 डायरी (गेस्टबुक) -->
+                <div class="interactive-obj diary" onclick="openDiary()">
+                    📖
+                </div>
+
+                <!-- 💡 डेस्क लैंप -->
+                <div class="interactive-obj lamp" onclick="toggleLights()">
+                    💡
+                </div>
+            </div>
+        </div>
+
+        <!-- प्रोफाइल एरिया -->
+        <div class="profile-box">
+            <div class="avatar-ring">
+                <span class="avatar-img">👑</span>
+            </div>
+            <div class="username">@creative_shiv</div>
+            <div class="bio">Creating chill beats & beautiful tech experiences... ❣️</div>
+        </div>
+
+        <!-- गाइडेंस -->
+        <div class="guide-text">
+            💡 लैंप, 🎧 हेडफोन, 📖 डायरी या ☕️ कॉफी पर टच करें!
+        </div>
+    </div>
+
+    <!-- 📖 डायरी पॉप-अप (Guestbook Modal) -->
+    <div class="modal" id="diary-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeDiary()">&times;</span>
+            <h3>📖 फैन डायरी (Guestbook)</h3>
+            <input type="text" id="fan-name" class="diary-input" placeholder="आपका नाम">
+            <input type="text" id="fan-msg" class="diary-input" placeholder="प्यारा सा संदेश...">
+            <button class="submit-btn" onclick="saveMessage()">सबमिट करें</button>
+            
+            <div class="messages-list" id="msg-box">
+                <!-- यहाँ सेव किए गए मैसेज दिखेंगे -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ☕️ यूपीआई पॉप-अप (Tip Jar Modal) -->
+    <div class="modal" id="tip-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeTipJar()">&times;</span>
+            <h3>☕️ शिव ❣️ को टिप दें</h3>
+            <p style="font-size: 0.8rem; color: #94a3b8;">अगर आपको मेरा काम पसंद आया, तो आप मुझे सपोर्ट कर सकते हैं!</p>
+            <div class="qr-placeholder">
+                <!-- सुंदर क्यूआर कोड प्लेसहोल्डर -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=your-upi-id@okaxis&pn=Shiv" alt="UPI QR">
+            </div>
+            <p style="font-size: 0.85rem; color: #a78bfa; font-weight: 600;">Scan QR to Pay via Paytm / PhonePe</p>
+        </div>
+    </div>
+
+    <script>
+        var isPlaying = false;
+        var isLightOn = false;
+        var audio = document.getElementById('lofi-audio');
+
+        // पेज लोड होते ही पुरानी डायरी मैसेज लोड करना
+        window.onload = function() {
+            loadMessages();
+        }
+
+        // 💡 लाइट ऑन/ऑफ
+        function toggleLights() {
+            var body = document.body;
+            var title = document.getElementById('app-title');
+            isLightOn = !isLightOn;
+
+            if (isLightOn) {
+                body.classList.add('warm-light');
+                title.innerHTML = 'SM Cozy Link 🌅';
+            } else {
+                body.classList.remove('warm-light');
+                title.innerHTML = 'SM Cozy Link 🌌';
+            }
+        }
+
+        // 🎧 म्यूज़िक प्ले/पॉज़
+        function toggleMusic() {
+            var dot = document.getElementById('music-dot');
+            isPlaying = !isPlaying;
+
+            if (isPlaying) {
+                audio.play();
+                dot.style.display = 'block';
+            } else {
+                audio.pause();
+                dot.style.display = 'none';
+            }
+        }
+
+        // 💻 लैपटॉप क्लिक
+        function openLink() {
+            alert('💻 लैपटॉप खुल गया! चलिए यूट्यूब चैनल पर चलते हैं...');
+            window.open('https://youtube.com', '_blank');
+        }
+
+        // ☕️ टिप जार खोलना
+        function openTipJar() {
+            document.getElementById('tip-modal').style.display = 'flex';
+        }
+
+        function closeTipJar() {
+            document.getElementById('tip-modal').style.display = 'none';
+        }
+
+        // 📖 डायरी खोलना
+        function openDiary() {
+            document.getElementById('diary-modal').style.display = 'flex';
+        }
+
+        function closeDiary() {
+            document.getElementById('diary-modal').style.display = 'none';
+        }
+
+        // ✍️ डायरी में मैसेज सेव करना (Local Storage का जादू)
+        function saveMessage() {
+            var name = document.getElementById('fan-name').value;
+            var msg = document.getElementById('fan-msg').value;
+
+            if (name.trim() === '' || msg.trim() === '') {
+                alert('कृपया नाम और संदेश दोनों भरें! 😊');
+                return;
+            }
+
+            var messages = JSON.parse(localStorage.getItem('sm_messages')) || [];
+            messages.push({ name: name, msg: msg });
+            localStorage.setItem('sm_messages', JSON.stringify(messages));
+
+            document.getElementById('fan-name').value = '';
+            document.getElementById('fan-msg').value = '';
+
+            loadMessages();
+        }
+
+        // डायरी के मैसेजेस दिखाना
+        function loadMessages() {
+            var box = document.getElementById('msg-box');
+            var messages = JSON.parse(localStorage.getItem('sm_messages')) || [];
+            box.innerHTML = '';
+
+            if (messages.length === 0) {
+                box.innerHTML = '<p style="font-size: 0.8rem; color: #64748b; text-align: center;">अभी कोई संदेश नहीं है। पहले बनें! ✍️</p>';
+                return;
+            }
+
+            for (var i = messages.length - 1; i >= 0; i--) {
+                var div = document.createElement('div');
+                div.className = 'msg-item';
+                div.innerHTML = '<strong>' + messages[i].name + ':</strong> ' + messages[i].msg;
+                box.appendChild(div);
+            }
+        }
+    </script>
+</body>
+</html>
