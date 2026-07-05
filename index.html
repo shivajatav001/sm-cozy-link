@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SM Cozy Link - Advanced</title>
+    <title>SM Cozy Link - Live</title>
+    <!-- सुंदर और क्लासिक फॉन्ट -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,6 +15,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* डिफ़ॉल्ट कोज़ी पर्पल थीम */
         body {
             background: linear-gradient(135deg, #09061a 0%, #150a2b 50%, #03010a 100%);
             color: #ffffff;
@@ -26,6 +28,7 @@
             transition: background 1s ease;
         }
 
+        /* वार्म सनसेट गोल्ड थीम */
         body.warm-light {
             background: linear-gradient(135deg, #2d1810 0%, #4a2113 50%, #170702 100%);
         }
@@ -129,10 +132,10 @@
             background-color: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 10px #ef4444;
         }
 
-        /* ☕️ कॉफी कप (टिप जार) */
+        /* ☕️ कॉफी कप */
         .coffee-mug { bottom: 37px; left: 80px; font-size: 1.6rem; }
         
-        /* 📖 डायरी (फैन मैसेज बुक) */
+        /* 📖 डायरी */
         .diary { bottom: 37px; right: 80px; font-size: 1.7rem; }
 
         /* 👤 प्रोफाइल एरिया */
@@ -175,9 +178,12 @@
             text-align: center;
         }
 
-       <audio id="lofi-audio" loop>
-    <source src="https://archive.org/download/THAHV128k/Tum%20Hi%20Aana%20Hapy%20Vers%20128k.mp3" type="audio/mpeg">
-</audio>
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #94a3b8;
         }
 
         .modal h3 {
@@ -185,7 +191,7 @@
             color: #a78bfa;
         }
 
-        /* डायरी फॉर्म और लिस्ट */
+        /* डायरी इनपुट */
         .diary-input {
             width: 100%;
             padding: 10px;
@@ -228,7 +234,7 @@
 
         .msg-item strong { color: #f472b6; }
 
-        /* क्यूआर कोड स्टाइल्स */
+        /* क्यूआर कोड इमेज */
         .qr-placeholder {
             width: 160px;
             height: 160px;
@@ -268,9 +274,9 @@
 </head>
 <body>
 
-    <!-- छुपा हुआ ऑडियो टैग -->
+    <!-- 🎵 असली "Tum Hi Aana" ऑडियो टैग (सही जगह पर सेट!) -->
     <audio id="lofi-audio" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://archive.org/download/THAHV128k/Tum%20Hi%20Aana%20Hapy%20Vers%20128k.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -284,7 +290,7 @@
                 <div class="rain"></div>
             </div>
 
-            <!-- मेज़ की चीजें -->
+            <!-- मेज़ -->
             <div class="desk">
                 <!-- 🎧 हेडफोन्स -->
                 <div class="interactive-obj headphones" onclick="toggleMusic()">
@@ -292,7 +298,7 @@
                     <div class="music-playing-dot" id="music-dot"></div>
                 </div>
 
-                <!-- ☕️ कॉफी कप (टिप जार) -->
+                <!-- ☕️ कॉफी कप -->
                 <div class="interactive-obj coffee-mug" onclick="openTipJar()">
                     ☕️
                 </div>
@@ -302,7 +308,7 @@
                     💻
                 </div>
 
-                <!-- 📖 डायरी (गेस्टबुक) -->
+                <!-- 📖 डायरी -->
                 <div class="interactive-obj diary" onclick="openDiary()">
                     📖
                 </div>
@@ -314,7 +320,7 @@
             </div>
         </div>
 
-        <!-- प्रोफाइल एरिया -->
+        <!-- प्रोफाइल -->
         <div class="profile-box">
             <div class="avatar-ring">
                 <span class="avatar-img">👑</span>
@@ -323,13 +329,13 @@
             <div class="bio">Creating chill beats & beautiful tech experiences... ❣️</div>
         </div>
 
-        <!-- गाइडेंस -->
+        <!-- गाइड -->
         <div class="guide-text">
             💡 लैंप, 🎧 हेडफोन, 📖 डायरी या ☕️ कॉफी पर टच करें!
         </div>
     </div>
 
-    <!-- 📖 डायरी पॉप-अप (Guestbook Modal) -->
+    <!-- 📖 डायरी पॉप-अप -->
     <div class="modal" id="diary-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeDiary()">&times;</span>
@@ -337,21 +343,17 @@
             <input type="text" id="fan-name" class="diary-input" placeholder="आपका नाम">
             <input type="text" id="fan-msg" class="diary-input" placeholder="प्यारा सा संदेश...">
             <button class="submit-btn" onclick="saveMessage()">सबमिट करें</button>
-            
-            <div class="messages-list" id="msg-box">
-                <!-- यहाँ सेव किए गए मैसेज दिखेंगे -->
-            </div>
+            <div class="messages-list" id="msg-box"></div>
         </div>
     </div>
 
-    <!-- ☕️ यूपीआई पॉप-अप (Tip Jar Modal) -->
+    <!-- ☕️ यूपीआई पॉप-अप -->
     <div class="modal" id="tip-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeTipJar()">&times;</span>
             <h3>☕️ शिव ❣️ को टिप दें</h3>
             <p style="font-size: 0.8rem; color: #94a3b8;">अगर आपको मेरा काम पसंद आया, तो आप मुझे सपोर्ट कर सकते हैं!</p>
             <div class="qr-placeholder">
-                <!-- सुंदर क्यूआर कोड प्लेसहोल्डर -->
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=your-upi-id@okaxis&pn=Shiv" alt="UPI QR">
             </div>
             <p style="font-size: 0.85rem; color: #a78bfa; font-weight: 600;">Scan QR to Pay via Paytm / PhonePe</p>
@@ -363,12 +365,10 @@
         var isLightOn = false;
         var audio = document.getElementById('lofi-audio');
 
-        // पेज लोड होते ही पुरानी डायरी मैसेज लोड करना
         window.onload = function() {
             loadMessages();
         }
 
-        // 💡 लाइट ऑन/ऑफ
         function toggleLights() {
             var body = document.body;
             var title = document.getElementById('app-title');
@@ -383,13 +383,14 @@
             }
         }
 
-        // 🎧 म्यूज़िक प्ले/पॉज़
         function toggleMusic() {
             var dot = document.getElementById('music-dot');
             isPlaying = !isPlaying;
 
             if (isPlaying) {
-                audio.play();
+                audio.play().catch(function(error) {
+                    alert("प्लेबैक शुरू करने के लिए ब्राउज़र अनुमति मांग रहा है। कृपया दोबारा टच करें! 😊");
+                });
                 dot.style.display = 'block';
             } else {
                 audio.pause();
@@ -397,13 +398,11 @@
             }
         }
 
-        // 💻 लैपटॉप क्लिक
         function openLink() {
             alert('💻 लैपटॉप खुल गया! चलिए यूट्यूब चैनल पर चलते हैं...');
             window.open('https://youtube.com', '_blank');
         }
 
-        // ☕️ टिप जार खोलना
         function openTipJar() {
             document.getElementById('tip-modal').style.display = 'flex';
         }
@@ -412,7 +411,6 @@
             document.getElementById('tip-modal').style.display = 'none';
         }
 
-        // 📖 डायरी खोलना
         function openDiary() {
             document.getElementById('diary-modal').style.display = 'flex';
         }
@@ -421,7 +419,6 @@
             document.getElementById('diary-modal').style.display = 'none';
         }
 
-        // ✍️ डायरी में मैसेज सेव करना (Local Storage का जादू)
         function saveMessage() {
             var name = document.getElementById('fan-name').value;
             var msg = document.getElementById('fan-msg').value;
@@ -441,7 +438,6 @@
             loadMessages();
         }
 
-        // डायरी के मैसेजेस दिखाना
         function loadMessages() {
             var box = document.getElementById('msg-box');
             var messages = JSON.parse(localStorage.getItem('sm_messages')) || [];
