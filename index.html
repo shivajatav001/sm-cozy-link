@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SM Cozy Link - Live</title>
+    <title>mohini ❣️💞</title>
     <!-- सुंदर और क्लासिक फॉन्ट -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- 🔑 जादुई बिना-चाबी वाली एआई लाइब्रेरी (Puter.js) -->
+    <script src="https://js.puter.com/v2/"></script>
+
     <style>
         * {
             margin: 0;
@@ -15,9 +19,8 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* डिफ़ॉल्ट कोज़ी पर्पल थीम */
         body {
-            background: linear-gradient(135deg, #09061a 0%, #150a2b 50%, #03010a 100%);
+            background: radial-gradient(circle, #0f082e 0%, #050212 100%);
             color: #ffffff;
             height: 100vh;
             overflow: hidden;
@@ -25,435 +28,257 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: background 1s ease;
-        }
-
-        /* वार्म सनसेट गोल्ड थीम */
-        body.warm-light {
-            background: linear-gradient(135deg, #2d1810 0%, #4a2113 50%, #170702 100%);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 420px;
-            height: 100%;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
         }
 
         .header {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: #a78bfa;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
-        }
-        body.warm-light .header {
-            color: #f59e0b;
+            color: #ec4899;
+            text-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
 
-        /* 🖼️ कोज़ी लो-फाई कमरा */
-        .room-box {
-            width: 100%;
-            height: 280px;
-            background: rgba(15, 10, 35, 0.4);
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        /* 🌀 मोहिनी नियोन एआई रिंग */
+        .mohini-container {
             position: relative;
+            width: 240px;
+            height: 240px;
             display: flex;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(10px);
-        }
-        body.warm-light .room-box {
-            border-color: rgba(245, 158, 11, 0.25);
-            background: rgba(45, 24, 16, 0.4);
+            cursor: pointer;
         }
 
-        /* खिड़की और बारिश */
-        .window {
-            position: absolute;
-            top: 25px;
-            left: 25px;
-            width: 90px;
-            height: 110px;
-            background: linear-gradient(to bottom, #111827, #1f2937);
-            border: 2px solid #374151;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .rain {
+        .mohini-ring {
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(transparent, transparent 10px, rgba(167, 139, 250, 0.15) 10px, rgba(167, 139, 250, 0.15) 20px);
-            animation: rainfall 0.6s infinite linear;
+            border-radius: 50%;
+            border: 4px double transparent;
+            background-image: linear-gradient(#050212, #050212), linear-gradient(135deg, #a855f7, #ec4899, #f43f5e);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.25);
+            position: absolute;
+            animation: rotateRing 8s infinite linear;
+            transition: transform 0.3s;
         }
 
-        /* मेज़ */
-        .desk {
-            position: absolute;
-            bottom: 25px;
-            width: 85%;
-            height: 12px;
-            background: #4b5563;
-            border-radius: 10px;
+        /* जब माइक सुन रहा हो */
+        .mohini-container.listening .mohini-ring {
+            animation: pulseRing 1s infinite ease-in-out;
+            box-shadow: 0 0 50px rgba(236, 72, 153, 0.6);
+            background-image: linear-gradient(#050212, #050212), linear-gradient(135deg, #ec4899, #f43f5e);
+        }
+
+        /* जब मोहिनी बोल रही हो */
+        .mohini-container.speaking .mohini-ring {
+            animation: speakingRing 1.2s infinite ease-in-out;
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.6);
+            background-image: linear-gradient(#050212, #050212), linear-gradient(135deg, #a855f7, #ec4899);
+        }
+
+        /* बीच का इनर कोर */
+        .inner-core {
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle, #1a0f4d 0%, #050212 100%);
+            border-radius: 50%;
+            z-index: 10;
             display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-        }
-        body.warm-light .desk {
-            background: #78350f;
-        }
-
-        /* इंटरैक्टिव चीजें */
-        .interactive-obj {
-            position: absolute;
-            cursor: pointer;
-            transition: transform 0.2s, filter 0.3s;
-        }
-        .interactive-obj:active {
-            transform: scale(0.9);
-        }
-
-        .lamp { bottom: 37px; right: 25px; font-size: 2rem; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2)); }
-        body.warm-light .lamp { filter: drop-shadow(0 0 20px #f59e0b); }
-
-        .laptop { bottom: 37px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; }
-        .laptop:active { transform: translateX(-50%) scale(0.9); }
-
-        .headphones { bottom: 37px; left: 25px; font-size: 1.8rem; }
-        .music-playing-dot {
-            position: absolute; top: -5px; right: -2px; width: 8px; height: 8px;
-            background-color: #ef4444; border-radius: 50%; display: none; box-shadow: 0 0 10px #ef4444;
-        }
-
-        /* ☕️ कॉफी कप */
-        .coffee-mug { bottom: 37px; left: 80px; font-size: 1.6rem; }
-        
-        /* 📖 डायरी */
-        .diary { bottom: 37px; right: 80px; font-size: 1.7rem; }
-
-        /* 👤 प्रोफाइल एरिया */
-        .profile-box {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .avatar-ring {
-            width: 60px; height: 60px; border-radius: 50%; border: 2px solid #a78bfa;
-            padding: 3px; margin: 0 auto; display: flex; justify-content: center; align-items: center;
-        }
-        body.warm-light .avatar-ring { border-color: #f59e0b; }
-
-        .username { font-size: 1.1rem; font-weight: 600; margin-top: 10px; }
-        .bio { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; max-width: 250px; }
-
-        /* 📦 पॉप-अप विंडोज (Modals) */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: #110e2e;
-            border: 1px solid #a78bfa;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 350px;
-            padding: 20px;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
-            position: relative;
-            text-align: center;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px; right: 15px;
-            font-size: 1.3rem;
-            cursor: pointer;
-            color: #94a3b8;
-        }
-
-        .modal h3 {
-            margin-bottom: 15px;
-            color: #a78bfa;
-        }
-
-        /* डायरी इनपुट */
-        .diary-input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #3b3561;
-            background: #09061a;
-            color: white;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
+            border: 2px solid #ec4899;
+            box-shadow: inset 0 0 20px rgba(236, 72, 153, 0.5), 0 0 15px rgba(236, 72, 153, 0.3);
+            font-size: 1.1rem;
             font-weight: 600;
-            width: 100%;
-        }
-
-        .messages-list {
-            max-height: 120px;
-            overflow-y: auto;
-            margin-top: 15px;
-            text-align: left;
-            border-top: 1px solid #3b3561;
-            padding-top: 10px;
-        }
-
-        .msg-item {
-            font-size: 0.8rem;
-            background: #18143d;
-            padding: 6px 10px;
-            border-radius: 6px;
-            margin-bottom: 6px;
-        }
-
-        .msg-item strong { color: #f472b6; }
-
-        /* क्यूआर कोड इमेज */
-        .qr-placeholder {
-            width: 160px;
-            height: 160px;
-            background: white;
-            margin: 15px auto;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 4px solid #a78bfa;
-        }
-
-        .qr-placeholder img {
-            width: 140px;
-            height: 140px;
-        }
-
-        /* फुटर गाइड */
-        .guide-text {
-            font-size: 0.8rem;
-            color: #64748b;
+            letter-spacing: 1px;
             text-align: center;
-            margin-bottom: 15px;
-            animation: pulseText 1.5s infinite ease-in-out;
+        }
+        .mohini-container.listening .inner-core {
+            border-color: #ec4899;
+            box-shadow: inset 0 0 20px rgba(236, 72, 153, 0.5);
+            color: #ec4899;
+        }
+        .mohini-container.speaking .inner-core {
+            border-color: #a855f7;
+            box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.5);
+            color: #a855f7;
         }
 
-        @keyframes rainfall {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100px; }
+        /* टेक्स्ट डिस्प्ले */
+        .display-text {
+            margin-top: 40px;
+            text-align: center;
+            max-width: 320px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
         }
 
-        @keyframes pulseText {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+        .user-says {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .mohini-says {
+            font-size: 1.1rem;
+            color: #ec4899;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
+            transition: color 0.3s;
+        }
+        .mohini-container.speaking + .display-text .mohini-says {
+            color: #a855f7;
+        }
+
+        /* एनीमेशन्स */
+        @keyframes rotateRing {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseRing {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes speakingRing {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- 🎵 असली "Tum Hi Aana" ऑडियो टैग (सही जगह पर सेट!) -->
-    <audio id="lofi-audio" loop>
-        <source src="https://archive.org/download/THAHV128k/Tum%20Hi%20Aana%20Hapy%20Vers%20128k.mp3" type="audio/mpeg">
-    </audio>
+    <!-- 🌌 तुम्हारा कस्टमाइज्ड हेडर -->
+    <div class="header">mohini ❣️💞</div>
 
-    <div class="container">
-        <!-- हेडर -->
-        <div class="header" id="app-title">SM Cozy Link 🌌</div>
-
-        <!-- कोज़ी रूम -->
-        <div class="room-box">
-            <!-- खिड़की -->
-            <div class="window">
-                <div class="rain"></div>
-            </div>
-
-            <!-- मेज़ -->
-            <div class="desk">
-                <!-- 🎧 हेडफोन्स -->
-                <div class="interactive-obj headphones" onclick="toggleMusic()">
-                    🎧
-                    <div class="music-playing-dot" id="music-dot"></div>
-                </div>
-
-                <!-- ☕️ कॉफी कप -->
-                <div class="interactive-obj coffee-mug" onclick="openTipJar()">
-                    ☕️
-                </div>
-
-                <!-- 💻 लैपटॉप -->
-                <div class="interactive-obj laptop" onclick="openLink()">
-                    💻
-                </div>
-
-                <!-- 📖 डायरी -->
-                <div class="interactive-obj diary" onclick="openDiary()">
-                    📖
-                </div>
-
-                <!-- 💡 डेस्क लैंप -->
-                <div class="interactive-obj lamp" onclick="toggleLights()">
-                    💡
-                </div>
-            </div>
-        </div>
-
-        <!-- प्रोफाइल -->
-        <div class="profile-box">
-            <div class="avatar-ring">
-                <span class="avatar-img">👑</span>
-            </div>
-            <div class="username">@creative_shiv</div>
-            <div class="bio">Creating chill beats & beautiful tech experiences... ❣️</div>
-        </div>
-
-        <!-- गाइड -->
-        <div class="guide-text">
-            💡 लैंप, 🎧 हेडफोन, 📖 डायरी या ☕️ कॉफी पर टच करें!
-        </div>
+    <!-- 🌀 मोहिनी नियोन रिंग -->
+    <div class="mohini-container" id="mohini-box" onclick="startSpeechRecognition()">
+        <div class="mohini-ring"></div>
+        <div class="inner-core" id="core-text">TAP ME</div>
     </div>
 
-    <!-- 📖 डायरी पॉप-अप -->
-    <div class="modal" id="diary-modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeDiary()">&times;</span>
-            <h3>📖 फैन डायरी (Guestbook)</h3>
-            <input type="text" id="fan-name" class="diary-input" placeholder="आपका नाम">
-            <input type="text" id="fan-msg" class="diary-input" placeholder="प्यारा सा संदेश...">
-            <button class="submit-btn" onclick="saveMessage()">सबमिट करें</button>
-            <div class="messages-list" id="msg-box"></div>
-        </div>
-    </div>
-
-    <!-- ☕️ यूपीआई पॉप-अप -->
-    <div class="modal" id="tip-modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeTipJar()">&times;</span>
-            <h3>☕️ शिव ❣️ को टिप दें</h3>
-            <p style="font-size: 0.8rem; color: #94a3b8;">अगर आपको मेरा काम पसंद आया, तो आप मुझे सपोर्ट कर सकते हैं!</p>
-            <div class="qr-placeholder">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=your-upi-id@okaxis&pn=Shiv" alt="UPI QR">
-            </div>
-            <p style="font-size: 0.85rem; color: #a78bfa; font-weight: 600;">Scan QR to Pay via Paytm / PhonePe</p>
-        </div>
+    <!-- टेक्स्ट डिस्प्ले -->
+    <div class="display-text">
+        <p class="user-says" id="user-text">"आप जो बोलेंगे वो यहाँ दिखेगा..."</p>
+        <p class="mohini-says" id="mohini-text">"हैलो शिव ❣️, मैं सुनने के लिए तैयार हूँ।"</p>
     </div>
 
     <script>
-        var isPlaying = false;
-        var isLightOn = false;
-        var audio = document.getElementById('lofi-audio');
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const synth = window.speechSynthesis;
+        let recognition;
 
-        window.onload = function() {
-            loadMessages();
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'hi-IN'; // हिंदी-इंग्लिश मिक्स सपोर्ट
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                setAppState('listening', 'LISTENING', 'सुन रही हूँ...', '...बोलिए शिव ❣️');
+            };
+
+            recognition.onend = () => {
+                if (!synth.speaking) {
+                    setAppState('idle', 'TAP ME', '', 'अब आपकी बारी, शिव ❣️।');
+                }
+            };
+
+            recognition.onresult = (event) => {
+                const speechToText = event.results[0][0].transcript;
+                document.getElementById('user-text').innerHTML = `"${speechToText}"`;
+                processVoiceCommand(speechToText);
+            };
+
+            recognition.onerror = (event) => {
+                console.error(event.error);
+                setAppState('idle', 'TAP ME', 'त्रुटि!', 'मुझे सुनने में थोड़ी दिक़्क़त हुई, शिव ❣️।');
+            };
+        } else {
+            alert("अरे शिव ❣️, आपके ब्राउज़र में वॉयस रिकॉग्निशन सपोर्ट नहीं कर रहा। कृपया क्रोम (Chrome) यूज़ करें!");
         }
 
-        function toggleLights() {
-            var body = document.body;
-            var title = document.getElementById('app-title');
-            isLightOn = !isLightOn;
+        function setAppState(state, coreText, userText, mohiniText) {
+            const box = document.getElementById('mohini-box');
+            const core = document.getElementById('core-text');
+            const uText = document.getElementById('user-text');
+            const mText = document.getElementById('mohini-text');
 
-            if (isLightOn) {
-                body.classList.add('warm-light');
-                title.innerHTML = 'SM Cozy Link 🌅';
-            } else {
-                body.classList.remove('warm-light');
-                title.innerHTML = 'SM Cozy Link 🌌';
-            }
+            box.className = 'mohini-container';
+            if (state !== 'idle') box.classList.add(state);
+
+            core.innerHTML = coreText;
+            if (userText) uText.innerHTML = `"${userText}"`;
+            if (mohiniText) mText.innerHTML = `"${mohiniText}"`;
         }
 
-        function toggleMusic() {
-            var dot = document.getElementById('music-dot');
-            isPlaying = !isPlaying;
+        function startSpeechRecognition() {
+            if (synth.speaking) return; 
+            recognition.start();
+        }
 
-            if (isPlaying) {
-                audio.play().catch(function(error) {
-                    alert("प्लेबैक शुरू करने के लिए ब्राउज़र अनुमति मांग रहा है। कृपया दोबारा टच करें! 😊");
+        // 🧠 बिना किसी API Key के लाइव एआई से जवाब पूछने का जादुई फंक्शन (Puter.js)
+        function processVoiceCommand(command) {
+            setAppState('speaking', 'THINKING...', '', 'सोच रही हूँ, शिव ❣️...');
+
+            // एआई के लिए मीठे और प्यारे सिस्टम निर्देश
+            const prompt = `You are Mohini ❣️💞, a sweet, loving, and extremely supportive 17-year-old Indian girl AI companion. Address the user as 'Shiv ❣️'. Answer Shiv's question in extremely warm, sweet, and friendly Hindi/Hinglish. Keep your answer very short, simple, and conversational (maximum 2 sentences). Shiv's question: "${command}"`;
+
+            // 🚀 पुटर एआई लाइव चैट कॉल (बिना चाबी के!)
+            puter.ai.chat(prompt)
+                .then(function(response) {
+                    let aiText = "";
+                    if (typeof response === 'string') {
+                        aiText = response;
+                    } else if (response && response.message && response.message.content) {
+                        aiText = response.message.content;
+                    } else if (response && response.text) {
+                        aiText = response.text;
+                    } else {
+                        aiText = JSON.stringify(response);
+                    }
+                    speak(aiText);
+                })
+                .catch(function(error) {
+                    console.error(error);
+                    speak("माफ़ करना शिव ❣️, मुझे जवाब सोचने में थोड़ी परेशानी हो रही है। कृपया दोबारा कोशिश करें!");
                 });
-                dot.style.display = 'block';
-            } else {
-                audio.pause();
-                dot.style.display = 'none';
-            }
         }
 
-        function openLink() {
-            alert('💻 लैपटॉप खुल गया! चलिए यूट्यूब चैनल पर चलते हैं...');
-            window.open('https://youtube.com', '_blank');
-        }
+        // 🔊 बोलकर सुनाने का फंक्शन
+        function speak(text) {
+            if (synth.speaking) return;
 
-        function openTipJar() {
-            document.getElementById('tip-modal').style.display = 'flex';
-        }
+            const utterThis = new SpeechSynthesisUtterance(text);
+            utterThis.lang = 'hi-IN';
+            utterThis.pitch = 1.1;    // मीठी आवाज़ के लिए
+            utterThis.rate = 1.0;
 
-        function closeTipJar() {
-            document.getElementById('tip-modal').style.display = 'none';
-        }
-
-        function openDiary() {
-            document.getElementById('diary-modal').style.display = 'flex';
-        }
-
-        function closeDiary() {
-            document.getElementById('diary-modal').style.display = 'none';
-        }
-
-        function saveMessage() {
-            var name = document.getElementById('fan-name').value;
-            var msg = document.getElementById('fan-msg').value;
-
-            if (name.trim() === '' || msg.trim() === '') {
-                alert('कृपया नाम और संदेश दोनों भरें! 😊');
-                return;
+            const voices = synth.getVoices();
+            for (let i = 0; i < voices.length; i++) {
+                if (voices[i].lang.includes('hi-IN') && voices[i].name.toLowerCase().includes('female')) {
+                    utterThis.voice = voices[i];
+                    break;
+                }
             }
 
-            var messages = JSON.parse(localStorage.getItem('sm_messages')) || [];
-            messages.push({ name: name, msg: msg });
-            localStorage.setItem('sm_messages', JSON.stringify(messages));
+            utterThis.onstart = () => {
+                setAppState('speaking', 'SPEAKING', '', text);
+            };
 
-            document.getElementById('fan-name').value = '';
-            document.getElementById('fan-msg').value = '';
+            utterThis.onend = () => {
+                setAppState('idle', 'TAP ME', '', text);
+            };
 
-            loadMessages();
-        }
-
-        function loadMessages() {
-            var box = document.getElementById('msg-box');
-            var messages = JSON.parse(localStorage.getItem('sm_messages')) || [];
-            box.innerHTML = '';
-
-            if (messages.length === 0) {
-                box.innerHTML = '<p style="font-size: 0.8rem; color: #64748b; text-align: center;">अभी कोई संदेश नहीं है। पहले बनें! ✍️</p>';
-                return;
-            }
-
-            for (var i = messages.length - 1; i >= 0; i--) {
-                var div = document.createElement('div');
-                div.className = 'msg-item';
-                div.innerHTML = '<strong>' + messages[i].name + ':</strong> ' + messages[i].msg;
-                box.appendChild(div);
-            }
+            synth.speak(utterThis);
         }
     </script>
 </body>
