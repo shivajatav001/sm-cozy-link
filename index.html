@@ -21,7 +21,7 @@
 
         /* पूरी स्क्रीन ही टैप बटन की तरह काम करेगी */
         body {
-            background: radial-gradient(circle, #0e072b 0%, #040110 100%);
+            background: radial-gradient(circle, #0f082e 0%, #050212 100%);
             color: #ffffff;
             height: 100vh;
             overflow: hidden;
@@ -31,6 +31,7 @@
             align-items: center;
             padding: 20px;
             cursor: pointer; /* छूने का संकेत */
+            transition: background 1s ease;
         }
 
         .header {
@@ -39,11 +40,11 @@
             color: #ec4899;
             text-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
             letter-spacing: 2px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             z-index: 100;
         }
 
-        /* 🔮 दो तैरते और चमकते हुए नियोन बिंदु */
+        /* 🔮 दो तैरते और चमकते हुए नियोन बिंदु (The Pulse Core) */
         .dots-container {
             display: flex;
             gap: 20px;
@@ -73,7 +74,7 @@
             animation: pulseDots 0.8s infinite ease-in-out;
         }
 
-        /* जब एआई सोच रहा हो (Thinking - Yellow/Gold Dots) */
+        /* जब एआई सोच रहा हो (Thinking - Gold/Yellow Dots) */
         body.thinking .dot {
             background-color: #f59e0b;
             box-shadow: 0 0 20px #f59e0b, 0 0 40px #f59e0b;
@@ -137,8 +138,8 @@
 </head>
 <body id="app-body" onclick="startSpeechRecognition()">
 
-    <!-- 👁️ लाइव कैमरा वीडियो एलिमेंट (इसे बिल्कुल अदृश्य/छुपा दिया गया है!) -->
-    <video id="camera-video" autoplay playsinline muted style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
+    <!-- 👁️ लाइव कैमरा वीडियो एलिमेंट (इसे CSS से स्क्रीन पर बिल्कुल छुपा दिया गया है!) -->
+    <video id="camera-video" autoplay playsinline muted style="display: none; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
 
     <!-- 🌌 कस्टमाइज्ड हेडर -->
     <div class="header">mohini ❣️💞</div>
@@ -170,7 +171,7 @@
 
             recognition.onstart = () => {
                 setAppState('listening', 'सुन रही हूँ...', '...बोलिए शिव ❣️');
-                if (!isCameraActive) startCamera(); // पहली बार टच करते ही कैमरा चुपचाप बैकग्राउंड में चालू होगा!
+                if (!isCameraActive) startCamera(); // पहली बार टच करते ही कैमरा बैकग्राउंड में चालू होगा!
             };
 
             recognition.onend = () => {
@@ -193,7 +194,7 @@
             alert("अरे शिव ❣️, आपके ब्राउज़र में वॉयस रिकॉग्निशन सपोर्ट नहीं कर रहा। कृपया क्रोम (Chrome) यूज़ करें!");
         }
 
-        // 👁️ कैमरा चुपचाप बैकग्राउंड में चालू करने का फंक्शन (स्क्रीन पर नहीं दिखेगा!)
+        // 👁️ कैमरा चुपचाप बैकग्राउंड में चालू करने का फंक्शन (यह स्क्रीन पर बिल्कुल नहीं दिखेगा)
         function startCamera() {
             const video = document.getElementById('camera-video');
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
