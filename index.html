@@ -139,7 +139,7 @@
 <body id="app-body" onclick="startSpeechRecognition()">
 
     <!-- 👁️ लाइव कैमरा वीडियो एलिमेंट (इसे CSS से स्क्रीन पर बिल्कुल छुपा दिया गया है!) -->
-    <video id="camera-video" autoplay playsinline muted style="display: none; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
+    <video id="camera-video" autoplay playsinline muted style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
 
     <!-- 🌌 कस्टमाइज्ड हेडर -->
     <div class="header">mohini ❣️💞</div>
@@ -194,7 +194,7 @@
             alert("अरे शिव ❣️, आपके ब्राउज़र में वॉयस रिकॉग्निशन सपोर्ट नहीं कर रहा। कृपया क्रोम (Chrome) यूज़ करें!");
         }
 
-        // 👁️ कैमरा चुपचाप बैकग्राउंड में चालू करने का फंक्शन (यह स्क्रीन पर बिल्कुल नहीं दिखेगा)
+        // 👁️ कैमरा चुपचाप बैकग्राउंड में चालू करने का फंक्शन (स्क्रीन पर नहीं दिखेगा)
         function startCamera() {
             const video = document.getElementById('camera-video');
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
@@ -224,11 +224,12 @@
             recognition.start();
         }
 
-        // 🧠 जेमिनी एआई (Puter.js) - दुनिया का कोई भी जवाब सोचने का फंक्शन!
+        // 🧠 जेमिनी एआई (Puter.js) - जवाब सोचने का फंक्शन!
         function processVoiceCommand(command) {
             setAppState('thinking', '', 'सोच रही हूँ, शिव ❣️...');
 
-            const prompt = `You are Mohini ❣️💞, a sweet, loving, and extremely supportive 17-year-old Indian girl AI companion. Address the user as 'Shiv ❣️'. Answer Shiv's question in extremely warm, sweet, and friendly Hindi/Hinglish. Keep your answer very short, simple, and conversational (maximum 2 sentences). Shiv's question: "${command}"`;
+            // 🌟 एआई को शुद्ध हिंदी और सही जेंडर का कड़ा निर्देश
+            const prompt = `You are Mohini ❣️💞, a sweet, loving, and extremely supportive 17-year-old Indian girl AI companion. Address the user as 'Shiv ❣️' and ALWAYS use masculine verbs and pronouns (e.g. use 'तुम बोलो', 'तुम्हारे साथ हूँ' - never use feminine verbs like 'बोलती रहो' for Shiv). Answer Shiv's question in extremely warm, sweet, and friendly PURE HINDI using Devanagari script ONLY. Absolutely DO NOT use any English letters, Latin script, or mixed words like 'हamesha' or 'अरेee'. Keep your answer very short, simple, and conversational (maximum 2 sentences). Shiv's question: "${command}"`;
 
             puter.ai.chat(prompt)
                 .then(function(response) {
