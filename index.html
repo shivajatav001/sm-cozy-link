@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mohini ❣️💞</title>
-    <!-- सुंदर और क्लासिक फॉन्ट -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- 🔑 जादुई बिना-चाबी वाली एआई लाइब्रेरी (Puter.js) -->
+    <!-- 🔑 बिना किसी API Key के AI चलाने की लाइब्रेरी (Puter.js) -->
     <script src="https://js.puter.com/v2/"></script>
 
     <style>
@@ -37,18 +36,20 @@
             color: #ec4899;
             text-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            z-index: 100;
         }
 
-        /* 🌀 मोहिनी नियोन एआई रिंग */
+        /* 🌀 मोहिनी नियोन एआई रिंग (स्कैनर कंटेनर) */
         .mohini-container {
             position: relative;
-            width: 240px;
-            height: 240px;
+            width: 250px;
+            height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            z-index: 50;
         }
 
         .mohini-ring {
@@ -56,7 +57,7 @@
             height: 100%;
             border-radius: 50%;
             border: 4px double transparent;
-            background-image: linear-gradient(#050212, #050212), linear-gradient(135deg, #a855f7, #ec4899, #f43f5e);
+            background-image: linear-gradient(#050212, #050212), linear-gradient(135deg, #a855f7, #ec4899, #00f0ff);
             background-origin: border-box;
             background-clip: content-box, border-box;
             box-shadow: 0 0 30px rgba(236, 72, 153, 0.25);
@@ -79,11 +80,11 @@
             background-image: linear-gradient(#050212, #050212), linear-gradient(135deg, #a855f7, #ec4899);
         }
 
-        /* बीच का इनर कोर */
+        /* 👁️ इनर कोर - इसमें लाइव कैमरा चलेगा! */
         .inner-core {
-            width: 130px;
-            height: 130px;
-            background: radial-gradient(circle, #1a0f4d 0%, #050212 100%);
+            width: 170px;
+            height: 170px;
+            background: #050212;
             border-radius: 50%;
             z-index: 10;
             display: flex;
@@ -95,21 +96,67 @@
             font-weight: 600;
             letter-spacing: 1px;
             text-align: center;
+            overflow: hidden;
+            position: relative;
         }
-        .mohini-container.listening .inner-core {
-            border-color: #ec4899;
-            box-shadow: inset 0 0 20px rgba(236, 72, 153, 0.5);
-            color: #ec4899;
+        .mohini-container.listening .inner-core { border-color: #ec4899; box-shadow: inset 0 0 20px rgba(236, 72, 153, 0.5); }
+        .mohini-container.speaking .inner-core { border-color: #a855f7; box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.5); }
+
+        /* लाइव कैमरा फीड वीडियो */
+        #camera-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.82;
         }
-        .mohini-container.speaking .inner-core {
-            border-color: #a855f7;
-            box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.5);
-            color: #a855f7;
+
+        /* ⚡️ जार्विस स्कैनिंग लेज़र लाइन */
+        .scan-laser {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #00f0ff, transparent);
+            box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+            z-index: 15;
+            animation: scanUpDown 2s infinite ease-in-out;
+            display: none;
+        }
+
+        .mohini-container.listening .scan-laser,
+        .mohini-container.speaking .scan-laser {
+            display: block;
+        }
+
+        /* 🔄 कैमरा स्विच बटन */
+        .cam-switch-btn {
+            background: rgba(236, 72, 153, 0.15);
+            border: 1px solid #ec4899;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.25);
+            transition: background 0.3s, transform 0.2s;
+            z-index: 100;
+            letter-spacing: 1px;
+        }
+        .cam-switch-btn:active {
+            transform: scale(0.92);
         }
 
         /* टेक्स्ट डिस्प्ले */
         .display-text {
-            margin-top: 40px;
+            margin-top: 25px;
             text-align: center;
             max-width: 320px;
             height: 100px;
@@ -117,6 +164,7 @@
             flex-direction: column;
             justify-content: center;
             gap: 10px;
+            z-index: 100;
         }
 
         .user-says {
@@ -136,33 +184,31 @@
             color: #a855f7;
         }
 
-        /* एनीमेशन्स */
-        @keyframes rotateRing {
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes pulseRing {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        @keyframes speakingRing {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.05) rotate(180deg); }
-            100% { transform: scale(1) rotate(360deg); }
-        }
+        /* एनिमेशन्स */
+        @keyframes rotateRing { 100% { transform: rotate(360deg); } }
+        @keyframes pulseRing { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @keyframes speakingRing { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.04) rotate(180deg); } 100% { transform: scale(1) rotate(360deg); } }
+        @keyframes scanUpDown { 0%, 100% { top: 0%; } 50% { top: 100%; } }
     </style>
 </head>
 <body>
 
-    <!-- 🌌 तुम्हारा कस्टमाइज्ड हेडर -->
     <div class="header">mohini ❣️💞</div>
 
     <!-- 🌀 मोहिनी नियोन रिंग -->
     <div class="mohini-container" id="mohini-box" onclick="startSpeechRecognition()">
         <div class="mohini-ring"></div>
-        <div class="inner-core" id="core-text">TAP ME</div>
+        <div class="inner-core" id="core-text">
+            <!-- Live Camera -->
+            <video id="camera-video" autoplay playsinline muted></video>
+            <!-- Laser Line -->
+            <div class="scan-laser"></div>
+            <span style="position: absolute; z-index: 5; font-size: 1rem;" id="tap-label">TAP ME</span>
+        </div>
     </div>
+
+    <!-- 🔄 कैमरा बदलने का नया बटन -->
+    <button class="cam-switch-btn" onclick="switchCamera()">🔄 कैमरा बदलें</button>
 
     <!-- टेक्स्ट डिस्प्ले -->
     <div class="display-text">
@@ -174,16 +220,20 @@
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const synth = window.speechSynthesis;
         let recognition;
+        let isCameraActive = false;
+        let currentFacingMode = "user"; // "user" = फ्रंट कैमरा, "environment" = बैक कैमरा
+        let currentStream = null;
 
         if (SpeechRecognition) {
             recognition = new SpeechRecognition();
             recognition.continuous = false;
-            recognition.lang = 'hi-IN'; // हिंदी-इंग्लिश मिक्स सपोर्ट
+            recognition.lang = 'hi-IN';
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
 
             recognition.onstart = () => {
                 setAppState('listening', 'LISTENING', 'सुन रही हूँ...', '...बोलिए शिव ❣️');
+                if (!isCameraActive) startCamera(); 
             };
 
             recognition.onend = () => {
@@ -206,16 +256,62 @@
             alert("अरे शिव ❣️, आपके ब्राउज़र में वॉयस रिकॉग्निशन सपोर्ट नहीं कर रहा। कृपया क्रोम (Chrome) यूज़ करें!");
         }
 
+        // 👁️ कैमरा चालू करने का फंक्शन
+        function startCamera() {
+            const video = document.getElementById('camera-video');
+            const label = document.getElementById('tap-label');
+            
+            // पुराना कैमरा स्ट्रीम बंद करना (ताकि नया चालू हो सके)
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+
+            // मिरर इफ़ेक्ट केवल फ्रंट कैमरा ("user") पर लगाने के लिए CSS टिल्ट सेट करना
+            if (currentFacingMode === "user") {
+                video.style.transform = "scaleX(-1)";
+            } else {
+                video.style.transform = "scaleX(1)";
+            }
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: currentFacingMode }, audio: false })
+                .then(function(stream) {
+                    currentStream = stream;
+                    video.srcObject = stream;
+                    isCameraActive = true;
+                    label.style.display = 'none'; 
+                })
+                .catch(function(err) {
+                    console.error("कैमरा एरर: ", err);
+                    alert("शिव ❣️, कैमरा एक्सेस करने की अनुमति दें ताकि हम स्कैन कर सकें!");
+                });
+        }
+
+        // 🔄 फ्रंट और बैक कैमरा स्विच करने का जादुई फंक्शन!
+        function switchCamera() {
+            if (!isCameraActive) {
+                startCamera();
+                return;
+            }
+            // "user" से "environment" या "environment" से "user" में बदलें
+            currentFacingMode = (currentFacingMode === "user") ? "environment" : "user";
+            startCamera();
+        }
+
         function setAppState(state, coreText, userText, mohiniText) {
             const box = document.getElementById('mohini-box');
-            const core = document.getElementById('core-text');
+            const label = document.getElementById('tap-label');
             const uText = document.getElementById('user-text');
             const mText = document.getElementById('mohini-text');
 
             box.className = 'mohini-container';
             if (state !== 'idle') box.classList.add(state);
 
-            core.innerHTML = coreText;
+            if (!isCameraActive) {
+                label.innerHTML = coreText;
+            } else {
+                label.style.display = 'none';
+            }
+
             if (userText) uText.innerHTML = `"${userText}"`;
             if (mohiniText) mText.innerHTML = `"${mohiniText}"`;
         }
@@ -225,14 +321,12 @@
             recognition.start();
         }
 
-        // 🧠 बिना किसी API Key के लाइव एआई से जवाब पूछने का जादुई फंक्शन (Puter.js)
+        // 🧠 जेमिनी एआई (Puter.js)
         function processVoiceCommand(command) {
             setAppState('speaking', 'THINKING...', '', 'सोच रही हूँ, शिव ❣️...');
 
-            // एआई के लिए मीठे और प्यारे सिस्टम निर्देश
             const prompt = `You are Mohini ❣️💞, a sweet, loving, and extremely supportive 17-year-old Indian girl AI companion. Address the user as 'Shiv ❣️'. Answer Shiv's question in extremely warm, sweet, and friendly Hindi/Hinglish. Keep your answer very short, simple, and conversational (maximum 2 sentences). Shiv's question: "${command}"`;
 
-            // 🚀 पुटर एआई लाइव चैट कॉल (बिना चाबी के!)
             puter.ai.chat(prompt)
                 .then(function(response) {
                     let aiText = "";
@@ -259,7 +353,7 @@
 
             const utterThis = new SpeechSynthesisUtterance(text);
             utterThis.lang = 'hi-IN';
-            utterThis.pitch = 1.1;    // मीठी आवाज़ के लिए
+            utterThis.pitch = 1.1; 
             utterThis.rate = 1.0;
 
             const voices = synth.getVoices();
@@ -282,4 +376,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
