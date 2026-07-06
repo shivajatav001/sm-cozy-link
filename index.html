@@ -184,7 +184,7 @@
             color: #a855f7;
         }
 
-        /* एनिमेशन्स */
+        /* एनीमेशन्स */
         @keyframes rotateRing { 100% { transform: rotate(360deg); } }
         @keyframes pulseRing { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
         @keyframes speakingRing { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.04) rotate(180deg); } 100% { transform: scale(1) rotate(360deg); } }
@@ -193,6 +193,7 @@
 </head>
 <body>
 
+    <!-- 🌌 कस्टमाइज्ड हेडर -->
     <div class="header">mohini ❣️💞</div>
 
     <!-- 🌀 मोहिनी नियोन रिंग -->
@@ -221,7 +222,7 @@
         const synth = window.speechSynthesis;
         let recognition;
         let isCameraActive = false;
-        let currentFacingMode = "user"; // "user" = फ्रंट कैमरा, "environment" = बैक कैमरा
+        let currentFacingMode = "user"; // "user" = फ्रंट, "environment" = बैक
         let currentStream = null;
 
         if (SpeechRecognition) {
@@ -261,12 +262,10 @@
             const video = document.getElementById('camera-video');
             const label = document.getElementById('tap-label');
             
-            // पुराना कैमरा स्ट्रीम बंद करना (ताकि नया चालू हो सके)
             if (currentStream) {
                 currentStream.getTracks().forEach(track => track.stop());
             }
 
-            // मिरर इफ़ेक्ट केवल फ्रंट कैमरा ("user") पर लगाने के लिए CSS टिल्ट सेट करना
             if (currentFacingMode === "user") {
                 video.style.transform = "scaleX(-1)";
             } else {
@@ -286,13 +285,12 @@
                 });
         }
 
-        // 🔄 फ्रंट और बैक कैमरा स्विच करने का जादुई फंक्शन!
+        // 🔄 कैमरा स्विच करने का फंक्शन
         function switchCamera() {
             if (!isCameraActive) {
                 startCamera();
                 return;
             }
-            // "user" से "environment" या "environment" से "user" में बदलें
             currentFacingMode = (currentFacingMode === "user") ? "environment" : "user";
             startCamera();
         }
@@ -347,14 +345,31 @@
                 });
         }
 
-        // 🔊 बोलकर सुनाने का फंक्शन
+        // ==========================================
+        // 🎙️ स्मार्ट वॉयस फ़िल्टर और वॉयस सेटिंग्स
+        // ==========================================
+        
+        // 🧹 बोलने से पहले इमोजीस और दिल साफ़ करने का फ़ंक्शन
+        function cleanTextForSpeech(text) {
+            // सारे इमोजीस और दिल के निशान हटाओ
+            let clean = text.replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, '');
+            // बचे-खुचे स्पेशल इमोजीस भी साफ़ करो
+            clean = clean.replace(/[❣️💞❤️✨😘😊😎]/g, '');
+            // डबल कोट्स और कोट्स हटाओ
+            clean = clean.replace(/["'“”]/g, '');
+            return clean.trim();
+        }
+
         function speak(text) {
             if (synth.speaking) return;
 
-            const utterThis = new SpeechSynthesisUtterance(text);
+            // 🌟 टेक्स्ट को फ़िल्टर करके एकदम साफ़ करें!
+            const cleanText = cleanTextForSpeech(text);
+
+            const utterThis = new SpeechSynthesisUtterance(cleanText);
             utterThis.lang = 'hi-IN';
-            utterThis.pitch = 1.1; 
-            utterThis.rate = 1.0;
+            utterThis.pitch = 1.0; // एकदम नैचुरल और मधुर पिच!
+            utterThis.rate = 0.9;  // धीमी और बहुत ही शांत बोलने की स्पीड!
 
             const voices = synth.getVoices();
             for (let i = 0; i < voices.length; i++) {
@@ -365,7 +380,7 @@
             }
 
             utterThis.onstart = () => {
-                setAppState('speaking', 'SPEAKING', '', text);
+                setAppState('speaking', 'SPEAKING', '', text); // स्क्रीन पर पूरा इमोजी वाला टेक्स्ट ही दिखेगा!
             };
 
             utterThis.onend = () => {
@@ -376,4 +391,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
